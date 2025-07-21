@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import axios from 'axios'
 const RegisterForm = () => {
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
@@ -7,35 +7,20 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
-        // Ajusta os nomes para os que o backend espera
-        const novoUsuario = {
-          name: nome,
-          email: email,
-          password: password
-        };
-      
         try {
-          const response = await fetch('https://portalturismo-backend.onrender.com/api/users', { // Ajuste a URL conforme seu backend
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(novoUsuario),
+          const response = await axios.post("http://localhost:5000/api/users" ,{
+            name: nome,
+            email,
+            password
           });
-      
-          if (!response.ok) {
-            const errorData = await response.json();
-            alert('Erro: ' + errorData.message);
-            return;
-          }
-      
-          const data = await response.json();
-          alert('Usuário criado com sucesso!');
-          window.location.href = '/'; // Redireciona para homepage
-      
+         alert("Usuário cadastrado com sucesso!!" + `nome: ${response.data.name} email: ${response.data.email}`)
+         window.location.href = "/login"
         } catch (error) {
-          alert('Erro na requisição: ' + error.message);
+          if(error.response){
+            alert("Erro ao cadastrar usuário")
+          }else{
+            alert("erro ao conectar ao servidor")
+          }
         }
       };
       

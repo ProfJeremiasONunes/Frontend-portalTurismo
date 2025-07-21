@@ -1,31 +1,28 @@
 import React, { useState } from "react";
-
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setSenha] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch('https://portalturismo-backend.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password}) // confirme se backend espera "password" ou "senha"
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert('Erro: ' + errorData.message);
-        return;
-      }
-
-      const user = await response.json();
-      localStorage.setItem('user', JSON.stringify(user));
-      alert('Login realizado com sucesso!');
-      window.location.href = '/';
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password
+      })
+      const userData = response.data;
+      localStorage.setItem("user", JSON.stringify(userData))
+      alert("usuario logado com sucesso!!")
+      navigate("/")
     } catch (error) {
-      alert('Erro na requisição: ' + error.message);
+      if (error.response) {
+        alert("Erro ao logar usuário email ou senha incorretos")
+      } else {
+        alert("erro ao conectar ao servidor")
+      }
     }
   };
 
