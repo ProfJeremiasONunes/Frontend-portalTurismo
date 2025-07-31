@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     try {
       // Faz uma requisição POST para o endpoint de login do backend
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("https://backend-portalturismo-wko4.onrender.com/api/auth/login", {
         email,
         password
       });

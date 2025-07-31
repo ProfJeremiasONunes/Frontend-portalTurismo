@@ -17,7 +17,7 @@ const RegisterForm = () => {
 
         try {
             // Envia os dados para o endpoint de cadastro do backend
-            const response = await axios.post("http://localhost:5000/api/users", {
+            const response = await axios.post("https://backend-portalturismo-wko4.onrender.com/api/users", {
                 name: nome,
                 email,
                 password

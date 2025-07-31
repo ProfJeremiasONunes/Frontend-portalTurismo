@@ -30,7 +30,7 @@ const ContactForm = () => {
 
         try {
             // Envia os dados do formulário para o backend usando uma requisição POST via axios
-            const response = await axios.post("http://localhost:5000/api/contacts", {
+            const response = await axios.post("https://backend-portalturismo-wko4.onrender.com/api/contacts", {
                 name: formData.name,
                 email: formData.email,
                 message: formData.message,
